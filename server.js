@@ -9,10 +9,10 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 app.set("view engine", "ejs");
 
-app.use(express.static("pwa/build"));
+app.use(express.static("fir-scanner/build"));
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "pwa/build/index.html"));
+  res.sendFile(path.join(__dirname, "fir-scanner/build/index.html"));
 });
 
 const PORT = process.env.PORT || 8000;

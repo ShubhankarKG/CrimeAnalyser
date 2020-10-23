@@ -1,0 +1,23 @@
+{
+  "name": "fir-scanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "pwa-install": "npm install --prefix fir-scanner",
+    "pwa-build": "cd fir-scanner && npm run build",
+    "pwa": "npm start --prefix fir-scanner",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix fir-scanner && npm run build --prefix fir-scanner"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
