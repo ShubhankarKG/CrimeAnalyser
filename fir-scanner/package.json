@@ -1,44 +1,26 @@
 {
   "name": "fir-scanner",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "3.4.4"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.{js,jsx}\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "pwa-install": "npm install --prefix pwa",
+    "pwa-build": "cd pwa && npm run build",
+    "server": "nodemon server.js",
+    "pwa": "npm start --prefix pwa",
+    "dev": "concurrently \" npm run server \" \" npm run pwa \"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix pwa && npm run build --prefix pwa"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "prettier",
-      "prettier/react"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-config-react": "^1.1.7",
-    "prettier": "^2.1.2"
+    "nodemon": "^2.0.6"
   }
 }
