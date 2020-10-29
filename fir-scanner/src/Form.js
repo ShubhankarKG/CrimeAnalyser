@@ -188,7 +188,7 @@ function Form() {
 
 return (
   <Container>
-    <Paper style={{padding: '0.75em', marginTop: '1.25em'}} >
+    <Paper style={{padding: '0.75em', marginTop: '1.25em', backgroundColor: '#D8DEE9', color: '#2E3440'}} >
       <Grid justify="flex-start" item xs={12} style={{margin: '1em 0'}}>
         <label> Name : </label>
       </Grid>
