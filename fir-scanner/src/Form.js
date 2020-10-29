@@ -192,7 +192,7 @@ return (
       <Grid justify="flex-start" item xs={12} style={{margin: '1em 0'}}>
         <label> Name : </label>
       </Grid>
-      <Grid item sm={12} md={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           required
@@ -206,7 +206,7 @@ return (
         { (errors.firstName)? <div className="errorMsg">{errors.firstName}</div> : null }
       </Grid>
 
-      <Grid item sm={12} md={6} style={{margin: '1em 0'}}>
+      <Grid item xs={12} sm={6} style={{margin: '1em 0'}}>
         <TextField
           fullWidth
           required
