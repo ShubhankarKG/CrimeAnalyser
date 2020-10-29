@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
-import { Select, MenuItem, Typography, Container, Grid, TextField, Paper, Button } from '@material-ui/core';
+import {
+  Select,
+  MenuItem,
+  Typography,
+  Container,
+  Grid,
+  TextField,
+  Paper,
+  Button,
+} from "@material-ui/core";
 
 function Form() {
-
   const [form, updateForm] = React.useState({
     firstName: "",
     lastName: "",
@@ -26,7 +34,7 @@ function Form() {
     email: "",
     gate: "",
     description: "",
-    facultyUserName: ""
+    facultyUserName: "",
   });
 
   const [step, setStep] = React.useState(1);
@@ -51,75 +59,74 @@ function Form() {
     let formIsValid = true;
     if (!form.firstName) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        firstName: "*First Name can't be empty"
-      })
-      )
+        firstName: "*First Name can't be empty",
+      }));
     }
 
     if (!form.lastName) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        lastName: "*Last Name can't be empty"
-      }))
+        lastName: "*Last Name can't be empty",
+      }));
     }
 
     if (!form.address) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        address: "*Address can't be empty"
-      }))
+        address: "*Address can't be empty",
+      }));
     }
 
     if (!form.contact) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        contact: "*Contact Number can't be empty"
-      }))
+        contact: "*Contact Number can't be empty",
+      }));
     }
 
     if (!form.description) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        description: "*Reason for meeting can't be empty"
-      }))
+        description: "*Reason for meeting can't be empty",
+      }));
     }
 
     if (!form.email) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        email: "*Email can't be empty"
-      }))
+        email: "*Email can't be empty",
+      }));
     }
 
     if (!form.facultyUserName) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        facultyUserName: "*Faculty to meet can't be empty"
-      }))
+        facultyUserName: "*Faculty to meet can't be empty",
+      }));
     }
 
     if (!form.gender) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        gender: "*Gender can't be empty"
-      }))
+        gender: "*Gender can't be empty",
+      }));
     }
 
     if (!form.gate) {
       formIsValid = false;
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        gate: "*Name of gate entered can't be empty"
-      }))
+        gate: "*Name of gate entered can't be empty",
+      }));
     }
 
     return formIsValid;
@@ -186,104 +193,121 @@ function Form() {
   //   }
   // }
 
-return (
-  <Container>
-    <Paper style={{padding: '0.75em', marginTop: '1.25em', backgroundColor: '#D8DEE9', color: '#2E3440'}} >
-      <Grid justify="flex-start" item xs={12} style={{margin: '1em 0'}}>
-        <label> Name : </label>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          required
-          name="firstName"
-          type="text"
-          label="First Name"
-          onChange={handleChange}
-          value={form.firstName}
-          variant='outlined'
-        />
-        { (errors.firstName)? <div className="errorMsg">{errors.firstName}</div> : null }
-      </Grid>
+  return (
+    <Container>
+      <Paper
+        style={{
+          padding: "0.75em",
+          marginTop: "1.25em",
+          backgroundColor: "#D8DEE9",
+          color: "#2E3440",
+        }}
+      >
+        <Grid justify="flex-start" item xs={12} style={{ margin: "1em 0" }}>
+          <label> Name : </label>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            required
+            name="firstName"
+            type="text"
+            label="First Name"
+            onChange={handleChange}
+            value={form.firstName}
+            variant="outlined"
+          />
+          {errors.firstName ? (
+            <div className="errorMsg">{errors.firstName}</div>
+          ) : null}
+        </Grid>
 
-      <Grid item xs={12} sm={6} style={{margin: '1em 0'}}>
-        <TextField
-          fullWidth
-          required
-          name="lastName"
-          type="text"
-          label="Last Name"
-          onChange={handleChange}
-          value={form.lastName}
-          variant='outlined'
-        />
-        { (errors.lastName)? <div className="errorMsg">{errors.lastName}</div> : null }
-      </Grid>
+        <Grid item xs={12} sm={6} style={{ margin: "1em 0" }}>
+          <TextField
+            fullWidth
+            required
+            name="lastName"
+            type="text"
+            label="Last Name"
+            onChange={handleChange}
+            value={form.lastName}
+            variant="outlined"
+          />
+          {errors.lastName ? (
+            <div className="errorMsg">{errors.lastName}</div>
+          ) : null}
+        </Grid>
 
-      <Grid justify='flex-start' item xs={12} style={{margin: '1em 0'}}>
-        <label> Gender: </label>
-        <Select
-          defaultValue="Male"
-          onChange={(event) => {
-            updateForm(form => ({
-              ...form,
-              gender: event.target.value,
-            }))
-          }}
-          variant='outlined'
-        >
-          <MenuItem value='Male'>Male</MenuItem>
-          <MenuItem value='Female'>Female</MenuItem>
-        </Select>
-        {/* <div className="errorMsg">{errors.gender}</div> */}
-        { (errors.gender)? <div className="errorMsg">{errors.gender}</div> : null }
-      </Grid>
+        <Grid justify="flex-start" item xs={12} style={{ margin: "1em 0" }}>
+          <label> Gender: </label>
+          <Select
+            defaultValue="Male"
+            onChange={(event) => {
+              updateForm((form) => ({
+                ...form,
+                gender: event.target.value,
+              }));
+            }}
+            variant="outlined"
+          >
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
+          </Select>
+          {/* <div className="errorMsg">{errors.gender}</div> */}
+          {errors.gender ? (
+            <div className="errorMsg">{errors.gender}</div>
+          ) : null}
+        </Grid>
 
-      <Grid item xs={12} style={{margin: '1em 0'}}>
-        <TextField
-          required
-          onChange={handleChange}
-          type="text"
-          label="Phone No."
-          name="contact"
-          value={form.contact}
-          variant='outlined'
-        />
-        {/* <div className="errorMsg">{errors.contact}</div> */}
-        { (errors.contact)? <div className="errorMsg">{errors.contact}</div> : null }
-      </Grid>
+        <Grid item xs={12} style={{ margin: "1em 0" }}>
+          <TextField
+            required
+            onChange={handleChange}
+            type="text"
+            label="Phone No."
+            name="contact"
+            value={form.contact}
+            variant="outlined"
+          />
+          {/* <div className="errorMsg">{errors.contact}</div> */}
+          {errors.contact ? (
+            <div className="errorMsg">{errors.contact}</div>
+          ) : null}
+        </Grid>
 
-      <Grid item xs={12} style={{margin: '1em 0'}}>
-        <TextField
-          required
-          fullWidth
-          onChange={handleChange}
-          type="email"
-          label="Email"
-          name="email"
-          value={form.email}
-          variant='outlined'
-        />
-        {/* <div className="errorMsg">{errors.email}</div> */}
-        { (errors.email)? <div className="errorMsg">{errors.email}</div> : null }
-      </Grid>
+        <Grid item xs={12} style={{ margin: "1em 0" }}>
+          <TextField
+            required
+            fullWidth
+            onChange={handleChange}
+            type="email"
+            label="Email"
+            name="email"
+            value={form.email}
+            variant="outlined"
+          />
+          {/* <div className="errorMsg">{errors.email}</div> */}
+          {errors.email ? <div className="errorMsg">{errors.email}</div> : null}
+        </Grid>
 
-      <Grid item xs={12} style={{margin: '1em 0'}}>
-        <TextField
-          required
-          fullWidth
-          onChange={handleChange}
-          type="text"
-          label="Enter Address"
-          name="address"
-          value={form.address}
-          variant='outlined'
-        />
-        {/* <div className="errorMsg">{errors.address}</div> */}
-        { (errors.address)? <div className="errorMsg">{errors.address}</div> : null }
-      </Grid>
-    </Paper>
-  </Container>
-  )
+        <Grid item xs={12} style={{ margin: "1em 0" }}>
+          <TextField
+            required
+            fullWidth
+            onChange={handleChange}
+            type="text"
+            label="Enter Address"
+            name="address"
+            value={form.address}
+            variant="outlined"
+          />
+          {/* <div className="errorMsg">{errors.address}</div> */}
+          {errors.address ? (
+            <div className="errorMsg">{errors.address}</div>
+          ) : null}
+        </Grid>
+      </Paper>
+    </Container>
+  );
 }
 export default Form;
