@@ -28,11 +28,16 @@ const getUserById = (request, response) => {
 };
 
 const createUser = (request, response) => {
-  const { name, email } = request.body;
-
+  var firstName = "";
+  var lastName = "";
+  const { email, gender, address, age } = request.body;
+  if (request.body.firstName) firstName = request.body.firstName;
+  if (request.body.lastName) lastName = request.body.lastName;
+  const name = `${firstName} ${lastName}`;
+  const intAge = parseInt(age);
   pool.query(
-    "INSERT INTO users (name, email) VALUES ($1, $2)",
-    [name, email],
+    "INSERT INTO users (name, email, gender, age, address) VALUES ($1, $2, $3, $4, $5)",
+    [name, email, gender, intAge, address],
     (error, results) => {
       if (error) {
         throw error;
@@ -44,11 +49,17 @@ const createUser = (request, response) => {
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id);
-  const { name, email } = request.body;
+  var firstName = "";
+  var lastName = "";
+  const { email, gender, address, age } = request.body;
+  if (request.body.firstName) firstName = request.body.firstName;
+  if (request.body.lastName) lastName = request.body.lastName;
+  const name = `${firstName} ${lastName}`;
+  const intAge = parseInt(age);
 
   pool.query(
-    "UPDATE users SET name = $1, email = $2 WHERE id = $3",
-    [name, email, id],
+    "UPDATE users SET name = $1, email = $2, age=$3, address=$4, gender=$5 WHERE id = $6",
+    [name, email, intAge, address, gender, id],
     (error, results) => {
       if (error) {
         throw error;
