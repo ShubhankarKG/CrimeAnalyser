@@ -23,6 +23,7 @@ function Form() {
     description: "",
     facultyEmail: "",
     facultyUserName: "",
+    age: ""
   });
 
   const [errors, setErrors] = React.useState({
@@ -35,6 +36,7 @@ function Form() {
     gate: "",
     description: "",
     facultyUserName: "",
+    age: ""
   });
 
   const [step, setStep] = React.useState(1);
@@ -256,6 +258,22 @@ function Form() {
           {/* <div className="errorMsg">{errors.gender}</div> */}
           {errors.gender ? (
             <div className="errorMsg">{errors.gender}</div>
+          ) : null}
+        </Grid>
+
+        <Grid item xs={12} style={{ margin: "1em 0" }}>
+          <TextField
+            required
+            onChange={handleChange}
+            type="text"
+            label="Age"
+            name="age"
+            value={form.age}
+            variant="outlined"
+          />
+          {/* <div className="errorMsg">{errors.contact}</div> */}
+          {errors.age ? (
+            <div className="errorMsg">{errors.age}</div>
           ) : null}
         </Grid>
 
