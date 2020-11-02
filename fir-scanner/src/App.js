@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Form from "./Form";
+import FIRForm from "./FIRForm";
 import {
   AppBar,
   Divider,
@@ -16,6 +17,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [form, setForm] = useState(0);
   return (
     <div className="App">
       <AppBar
@@ -26,7 +28,10 @@ function App() {
           <IconButton onClick={() => setOpen(true)}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">Fill Form</Typography>
+          <Typography variant="h6">
+            {form === 0 && "Fill Form"}
+            {form === 1 && "Fill FIR Form"}
+          </Typography>
         </Toolbar>
       </AppBar>
       <SwipeableDrawer
@@ -38,13 +43,14 @@ function App() {
       >
         <List>
           <Divider />
-          <ListItem>Fill Form</ListItem>
+          <ListItem onClick={() => setForm(0)}>Fill Form</ListItem>
           <Divider />
-          <ListItem>OCR Scan</ListItem>
+          <ListItem onClick={() => setForm(1)}>Fill FIR Form</ListItem>
           <Divider />
         </List>
       </SwipeableDrawer>
-      <Form />
+      {form === 0 && <Form />}
+      {form === 1 && <FIRForm />}
     </div>
   );
 }
