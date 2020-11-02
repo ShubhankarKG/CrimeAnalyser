@@ -23,7 +23,7 @@ function Form() {
     description: "",
     facultyEmail: "",
     facultyUserName: "",
-    age: ""
+    age: "",
   });
 
   const [errors, setErrors] = React.useState({
@@ -36,7 +36,7 @@ function Form() {
     gate: "",
     description: "",
     facultyUserName: "",
-    age: ""
+    age: "",
   });
 
   const [step, setStep] = React.useState(1);
@@ -272,9 +272,7 @@ function Form() {
             variant="outlined"
           />
           {/* <div className="errorMsg">{errors.contact}</div> */}
-          {errors.age ? (
-            <div className="errorMsg">{errors.age}</div>
-          ) : null}
+          {errors.age ? <div className="errorMsg">{errors.age}</div> : null}
         </Grid>
 
         <Grid item xs={12} style={{ margin: "1em 0" }}>
