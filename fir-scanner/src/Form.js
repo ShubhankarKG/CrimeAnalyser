@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   MenuItem,
@@ -9,6 +9,7 @@ import {
   Paper,
   Button,
 } from "@material-ui/core";
+import axios from "axios";
 
 function Form() {
   const [form, updateForm] = React.useState({
@@ -24,6 +25,8 @@ function Form() {
     facultyEmail: "",
     facultyUserName: "",
     age: "",
+    latitude: "",
+    longitude: "",
   });
 
   const [errors, setErrors] = React.useState({
@@ -37,15 +40,11 @@ function Form() {
     description: "",
     facultyUserName: "",
     age: "",
+    latitude: "",
+    longitude: "",
   });
 
-  const [step, setStep] = React.useState(1);
-  const [otp, setOtp] = React.useState(null);
-
-  const otpFieldRef = React.useRef(null);
-  const [status, setStatus] = React.useState("Validating visitor...");
-  const [error, setError] = React.useState(false);
-  const [faculty, setFaculty] = React.useState([]);
+  const [getDetails, toggleGetDetails] = useState(false);
 
   // function getData() {
   //   axios.get(constants.FACULTY)
@@ -56,6 +55,29 @@ function Form() {
   //       alert(e.toString());
   //     })
   // }
+  useEffect(() => {
+    if (getDetails && form.address !== "") {
+      axios
+        .get("http://www.mapquestapi.com/geocoding/v1/address", {
+          params: {
+            key: process.env.REACT_APP_API_KEY,
+            location: form.address,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.results[0].locations[0].latLng);
+          const { lat, lng } = res.data.results[0].locations[0].latLng;
+          updateForm((prevDetails) => ({
+            ...prevDetails,
+            latitude: lat,
+            longitude: lng,
+          }));
+        })
+        .catch((err) => {
+          console.log("ERR: ", err.toString());
+        });
+    }
+  }, [form.address, getDetails]);
 
   function isFormValid() {
     let formIsValid = true;
@@ -306,7 +328,7 @@ function Form() {
           {errors.email ? <div className="errorMsg">{errors.email}</div> : null}
         </Grid>
 
-        <Grid item xs={12} style={{ margin: "1em 0" }}>
+        <Grid item xs={6} style={{ margin: "1em 0" }}>
           <TextField
             required
             fullWidth
@@ -318,6 +340,48 @@ function Form() {
             variant="outlined"
           />
           {/* <div className="errorMsg">{errors.address}</div> */}
+          {errors.address ? (
+            <div className="errorMsg">{errors.address}</div>
+          ) : null}
+        </Grid>
+        <Grid item xs={6} style={{ margin: "1em 0" }}>
+          <Button
+            onClick={() => toggleGetDetails(true)}
+            disabled={getDetails || !form.address}
+          >
+            Get Geocode
+          </Button>
+        </Grid>
+
+        <Grid item xs={6} style={{ margin: "1em 0" }}>
+          <TextField
+            required
+            fullWidth
+            onChange={handleChange}
+            type="text"
+            label="Longitude"
+            name="longitude"
+            value={form.longitude}
+            variant="outlined"
+            disabled
+          />
+          {/* <div className="errorMsg">{errors.address}</div> */}
+          {errors.address ? (
+            <div className="errorMsg">{errors.address}</div>
+          ) : null}
+        </Grid>
+        <Grid item xs={6} style={{ margin: "1em 0" }}>
+          <TextField
+            required
+            fullWidth
+            onChange={handleChange}
+            type="text"
+            label="Latitude"
+            name="latitude"
+            value={form.latitude}
+            variant="outlined"
+            disabled
+          />
           {errors.address ? (
             <div className="errorMsg">{errors.address}</div>
           ) : null}
