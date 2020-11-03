@@ -346,7 +346,7 @@ function Form() {
             <div className="errorMsg">{errors.address}</div>
           ) : null}
         </Grid>
-        <Grid item xs={6} style={{ margin: "1em 0" }}>
+        <Grid item justify="flex-end" style={{ margin: "1em 0" }}>
           <Button
             onClick={() => toggleGetDetails(true)}
             disabled={getDetails || !form.address}
@@ -389,7 +389,9 @@ function Form() {
           ) : null}
         </Grid>
 
-        <Button onClick={submitHandler}>Submit</Button>
+        <Grid item justify="flex-end">
+          <Button onClick={submitHandler}>Submit</Button>
+        </Grid>
       </Paper>
     </Container>
   );
