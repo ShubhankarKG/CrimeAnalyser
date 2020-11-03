@@ -2,7 +2,8 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const path = require("path");
-const db = require("./queries");
+const users = require("./queries/users");
+const crime_reports = require("./queries/crime_reports");
 
 const app = express();
 app.use(cors());
@@ -13,15 +14,21 @@ app.set("view engine", "ejs");
 
 app.use(express.static("fir-scanner/build"));
 
-app.get('/users', db.getUsers);
-app.get('/users/:id', db.getUserById);
-app.post('/users', db.createUser);
-app.put('/users/:id', db.updateUser);
-app.delete('/users/:id', db.deleteUser);
+app.get("/users", users.getUsers);
+app.get("/users/:id", users.getUserById);
+app.post("/users", users.createUser);
+app.put("/users/:id", users.updateUser);
+app.delete("/users/:id", users.deleteUser);
 
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "fir-scanner/build/index.html"));
-// });
+app.get("/crime_reports", crime_reports.getCrimeReports);
+app.get("/crime_reports/:crime_id", crime_reports.getCrimeReportsById);
+app.post("/crime_reports", crime_reports.createCrimeReport);
+app.put("/crime_reports/:crime_id", crime_reports.updateCrimeReport);
+app.delete("/crime_reports/:crime_id", crime_reports.deleteCrimeReport);
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "fir-scanner/build/index.html"));
+});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
