@@ -2,12 +2,19 @@ const pool = require("../db");
 
 const users = {
   getUsers(req, res) {
-    pool.query("SELECT * FROM users ORDER BY id ASC", (err, results) => {
-      if (err) {
-        throw err;
+    const page = req.query.page ? req.query.page : 1;
+    const limit = req.query.limit ? req.query.limit : 20;
+    const offset = (page - 1) * limit;
+    pool.query(
+      "SELECT * FROM users ORDER BY id ASC LIMIT $2 OFFSET $1",
+      [offset, limit],
+      (err, results) => {
+        if (err) {
+          throw err;
+        }
+        res.status(200).json(results.rows);
       }
-      res.status(200).json(results.rows);
-    });
+    );
   },
 
   getUserById(request, response) {
