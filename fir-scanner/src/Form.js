@@ -19,11 +19,6 @@ function Form() {
     gender: "Male",
     address: "",
     email: "",
-    gate: "Main Gate",
-    facultyID: "",
-    description: "",
-    facultyEmail: "",
-    facultyUserName: "",
     age: "",
     latitude: "",
     longitude: "",
@@ -195,6 +190,13 @@ function Form() {
     });
   }
 
+  const submitHandler = (event) => {
+    axios
+      .post("http://localhost:8000/users", form)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   // function validateOTP(event) {
   //   if (otpFieldRef.current && parseInt(otpFieldRef.current.value) !== otp) {
   //     otpFieldRef.current.value = "";
@@ -328,7 +330,7 @@ function Form() {
           {errors.email ? <div className="errorMsg">{errors.email}</div> : null}
         </Grid>
 
-        <Grid item xs={6} style={{ margin: "1em 0" }}>
+        <Grid item xs={12} style={{ margin: "1em 0" }}>
           <TextField
             required
             fullWidth
@@ -386,6 +388,8 @@ function Form() {
             <div className="errorMsg">{errors.address}</div>
           ) : null}
         </Grid>
+
+        <Button onClick={submitHandler}>Submit</Button>
       </Paper>
     </Container>
   );
