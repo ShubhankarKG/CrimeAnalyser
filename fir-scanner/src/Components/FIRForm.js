@@ -9,6 +9,7 @@ import {
   Paper,
   Button,
 } from "@material-ui/core";
+import axios from "axios";
 
 const FIRForm = () => {
   const [form, updateForm] = useState({
@@ -18,9 +19,9 @@ const FIRForm = () => {
     contact: "",
     email: "",
 
-    placeOfOccurence: "",
+    place_of_occurrence: "",
 
-    offenceNature: "",
+    offence_desc: "",
     offenceSection: "",
   });
 
@@ -32,6 +33,13 @@ const FIRForm = () => {
         [name]: value,
       };
     });
+  };
+
+  const submitHandler = (event) => {
+    axios
+      .post("http://localhost:8000/crime_reports", form)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -121,8 +129,8 @@ const FIRForm = () => {
             onChange={handleChange}
             type="text"
             label="Place"
-            name="placeOfOccurence"
-            value={form.placeOfOccurence}
+            name="place_of_occurrence"
+            value={form.place_of_occurrence}
             variant="outlined"
           />
         </Grid>
@@ -138,8 +146,8 @@ const FIRForm = () => {
             onChange={handleChange}
             type="text"
             label="Nature of Offence"
-            name="offenceNature"
-            value={form.offenceNature}
+            name="offence_desc"
+            value={form.offence_desc}
             variant="outlined"
           />
         </Grid>
@@ -154,6 +162,9 @@ const FIRForm = () => {
             value={form.offenceSection}
             variant="outlined"
           />
+        </Grid>
+        <Grid>
+          <Button onClick={submitHandler}>Submit</Button>
         </Grid>
       </Paper>
     </Container>
