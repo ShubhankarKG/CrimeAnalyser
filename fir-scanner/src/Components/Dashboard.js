@@ -1,16 +1,10 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import {
-  Paper,
   Container,
   Grid,
-  TextField,
-  Input,
-  IconButton,
-  Typography,
 } from "@material-ui/core";
 import {
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -23,7 +17,6 @@ import {
 
 export default function Dashboard(props) {
   const [data, setData] = React.useState(null);
-  const [step, setStep] = React.useState(0);
   const [dirtyList, setDirtyList] = React.useState(null);
   const [progressList, setProgressList] = React.useState(null);
   const [page, setPage] = React.useState(0);
@@ -40,7 +33,7 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     getData();
-  });
+  }, [data]);
 
   const getTableHead = () => {
     return (
@@ -87,7 +80,7 @@ export default function Dashboard(props) {
   const getPagination = () => {
     return (
       <TablePagination
-        count={data.length}
+        count={5}
         page={page}
         onChangePage={(event, page) => setPage(page)}
         rowsPerPage={rowsPerPage}
@@ -99,7 +92,6 @@ export default function Dashboard(props) {
 
   return (
     <Container>
-      <Paper>
         <Grid container justify="center">
           <Grid item>
             <TableContainer>
@@ -114,7 +106,6 @@ export default function Dashboard(props) {
             </TableContainer>
           </Grid>
         </Grid>
-      </Paper>
     </Container>
   );
 }

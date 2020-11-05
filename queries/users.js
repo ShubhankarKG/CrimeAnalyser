@@ -28,6 +28,16 @@ const users = {
     });
   },
 
+  getCount(req, res) {
+    pool.query("SELECT COUNT(*) from users", (err, results) => {
+      console.log(results);
+      if (err) {
+        throw err;
+      }
+      res.status(200).json(results.rows);
+    })
+  },
+
   createUser(request, response) {
     var firstName = "";
     var lastName = "";
