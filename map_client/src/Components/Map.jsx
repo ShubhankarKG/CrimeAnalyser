@@ -7,7 +7,7 @@ export default function Map() {
   const [viewport, setViewport] = useState({
     latitude: 19.07599,
     longitude: 72.877393,
-    zoom: 5,
+    zoom: 4,
     width: '100vw',
     height: '100vh'
   })
@@ -20,17 +20,18 @@ export default function Map() {
       }}
       mapStyle="mapbox://styles/shubhankarkg/ckh4wo0z108pz19mpn2ay57dj"
     >
-      {/* {
-        cities.filter(city => city.country==="IN").map((city) => (
-          <Marker 
-            key={`${city.lat}_${city.lng}`} 
-            latitude={city.lat} 
-            longitude={city.lng}
-          >
-            <h2>{city.name}</h2>
-          </Marker>
-        ))
-      } */}
+      {
+        console.log(cities.filter(city => city.country === "IN"))
+      }{cities.filter(city => city.country === "IN").map((city) => (
+        <Marker
+          key={`${city.lat}_${city.lng}`}
+          latitude={parseInt(city.lat)}
+          longitude={parseInt(city.lng)}
+        >
+          {/* <p style={{fontWeight: "bold", color: "white"}}>Crime rate = 101</p> */}
+        </Marker>
+      ))
+      }
     </ReactMapGL>
   )
 }
