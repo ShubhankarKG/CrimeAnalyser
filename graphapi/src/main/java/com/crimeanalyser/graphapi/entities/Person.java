@@ -1,4 +1,4 @@
-package com.crimeanalyser.graphapi;
+package com.crimeanalyser.graphapi.entities;
 
 import java.util.Set;
 

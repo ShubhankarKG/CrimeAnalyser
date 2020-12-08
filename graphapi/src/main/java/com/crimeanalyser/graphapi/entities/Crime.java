@@ -1,4 +1,4 @@
-package com.crimeanalyser.graphapi;
+package com.crimeanalyser.graphapi.entities;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
@@ -9,8 +9,7 @@ public class Crime {
   @Id @GeneratedValue private Long id;
   private Integer count;
   private String type;
-
-  private Crime(){}
+  
   public Crime(String type, Integer count) {
     this.type = type;
     this.count = count;

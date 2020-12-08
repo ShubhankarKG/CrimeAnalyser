@@ -1,7 +1,9 @@
-package com.crimeanalyser.graphapi;
+package com.crimeanalyser.graphapi.repositories;
 
 import java.util.List;
 import java.util.Map;
+
+import com.crimeanalyser.graphapi.entities.Crime;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.repository.CrudRepository;
