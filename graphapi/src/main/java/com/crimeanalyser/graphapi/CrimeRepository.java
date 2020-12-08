@@ -17,7 +17,7 @@ public interface CrimeRepository extends CrudRepository<Crime, Long> {
   List<Crime> getCrimesInLocation(@Param("location") String location);
 
   @Query("MATCH (c:Crime)-[r:OCCURED_IN]->(l:Location) WHERE r.year=$year RETURN c")
-  List<Crime> getCrimesInLocation(@Param("year") Integer year);
+  List<Crime> getCrimesInYear(@Param("year") Integer year);
 
   @Query(value = "MATCH (c:Crime)-[r:OCCURED_IN]->(l:Location) WHERE r.year=$year AND l.location=$location RETURN c")
   List<Crime> getCrimesInLocationAndYear(@Param("year") Integer year, @Param("location") String location);
