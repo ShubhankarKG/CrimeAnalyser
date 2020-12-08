@@ -1,4 +1,4 @@
-package com.crimeanalyser.graphapi.entities;
+package com.crimeanalyser.graphapi;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
@@ -10,6 +10,7 @@ public class Location {
   @Id @GeneratedValue private Long id;
   private String location;
 
+  private Location(){}
   public Location(String location) {
     this.location = location;
   }

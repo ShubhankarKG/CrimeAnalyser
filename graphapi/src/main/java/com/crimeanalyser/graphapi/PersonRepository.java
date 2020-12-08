@@ -1,8 +1,6 @@
-package com.crimeanalyser.graphapi.repositories;
+package com.crimeanalyser.graphapi;
 
 import java.util.List;
-
-import com.crimeanalyser.graphapi.entities.Person;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
