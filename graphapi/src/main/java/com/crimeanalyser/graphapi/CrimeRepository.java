@@ -1,17 +1,22 @@
 package com.crimeanalyser.graphapi;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.annotation.QueryResult;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface CrimeRepository extends CrudRepository<Crime, Long> {
+public interface CrimeRepository extends Neo4jRepository<Crime, Long> {
   List<Crime> findByType(@Param("type") String type);
 
-  @Query("MATCH (c:Crime) RETURN c.type, count(c) as total ORDER BY crimeType DESC")
-  Iterable<CrimeCount> countAllByType();
+  @Query("MATCH (c:Crime) RETURN c.type, COUNT(c) AS total ORDER BY c.type")
+  List<CrimeCount> countCrimesByType();
 
   @Query("MATCH (c:Crime)-[r:OCCURED_IN]->(l:Location) WHERE l.location=$location RETURN c")
   List<Crime> getCrimesInLocation(@Param("location") String location);
@@ -24,24 +29,19 @@ public interface CrimeRepository extends CrudRepository<Crime, Long> {
 }
 
 class CrimeCount {
-  private String crimeType;
+  private String type;
   private Long total;
 
-  public CrimeCount(String crimeType, Long total) {
-    this.total = total;
-    this.crimeType = crimeType;
-  }
-
-  public void setCrimetype(String crimeType) {
-    this.crimeType = crimeType;
+  public void setType(String crimeType) {
+    this.type = type;
   }
 
   public void setTotal(Long total) {
     this.total = total;
   }
 
-  public String getCrimeType() {
-    return crimeType;
+  public String getType() {
+    return type;
   }
 
   public Long getTotal() {
