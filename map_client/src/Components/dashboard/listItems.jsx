@@ -10,15 +10,15 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
-export const mainListItems = (
+export const mainListItems = ({ history, setCounter }) => (
   <div>
     <ListItem button>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Map" />
+      <ListItemText primary="Map" onClick={() => history.push("/map")} />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={() => setCounter(0)}>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
@@ -34,7 +34,7 @@ export const mainListItems = (
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Custom Reports" />
+      <ListItemText primary="Custom Reports" onClick={() => setCounter(1)} />
     </ListItem>
   </div>
 );

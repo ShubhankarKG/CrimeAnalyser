@@ -6,18 +6,18 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 
-export default function Orders() {
-  const [tableData, setTableData] = React.useState([]);
+export default function Orders({ tableData }) {
+  // const [tableData, setTableData] = React.useState([]);
 
-  React.useEffect(() => {
-    fetch("http://localhost:8000/gdb/location")
-      .then((res) => res.json())
-      .then((res) => {
-        setTableData(res.result);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // React.useEffect(() => {
+  //   fetch("http://localhost:8000/gdb/location")
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       setTableData(res.result);
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <React.Fragment>
@@ -34,7 +34,10 @@ export default function Orders() {
           <TableBody>
             {tableData.map((row, idx) => (
               <TableRow key={idx}>
-                <TableCell>{row.location}</TableCell>
+                {Object.keys(row).map((val) => (
+                  <TableCell>{row[val]}</TableCell>
+                ))}
+                {/* <TableCell>{row.location}</TableCell>
                 <TableCell>{row.AttemptToMurder}</TableCell>
                 <TableCell>{row.Burglary}</TableCell>
                 <TableCell>{row.Cheating}</TableCell>
@@ -46,7 +49,7 @@ export default function Orders() {
                 <TableCell>{row.Riots}</TableCell>
                 <TableCell>{row.Theft}</TableCell>
                 <TableCell>{row.total}</TableCell>
-                <TableCell>{row.year}</TableCell>
+                <TableCell>{row.year}</TableCell> */}
               </TableRow>
             ))}
           </TableBody>
