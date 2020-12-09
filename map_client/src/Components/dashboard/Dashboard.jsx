@@ -24,6 +24,7 @@ import Orders from "./Orders";
 import CustomOrder from "./CustomOrder";
 import CustomChart from "./CustomChart";
 import Map from "./Map";
+import { messaging } from "../../init-fcm";
 
 const drawerWidth = 240;
 
@@ -120,6 +121,24 @@ export default function Dashboard({ history }) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const [tableData, setTableData] = React.useState([]);
+
+  React.useEffect(() => {
+    messaging
+      .requestPermission()
+      .then(async function () {
+        const token = await messaging.getToken();
+        console.log("token = ", token);
+      })
+      .catch(function (err) {
+        console.log("Unable to get permission to notify.", err);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    window.navigator.serviceWorker.addEventListener("message", (message) =>
+      console.log(message)
+    );
+  }, []);
 
   React.useEffect(() => {
     fetch("http://localhost:8000/gdb/location")
