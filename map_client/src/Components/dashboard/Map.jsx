@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import AddLocationTwoToneIcon from '@material-ui/icons/AddLocationTwoTone';
+import CrimeCard from "./CrimeCard";
 
 const springHost = "http://localhost:8080";
 
@@ -16,6 +17,7 @@ export default function Map() {
   const [locations, setLocations] = useState([]);
   const [loading1, setLoading1] = useState(true);
   const [loading2, setLoading2] = useState(true);
+  const [selected, setSelected] = useState(null);
 
   React.useEffect(() => {
     fetch(springHost + `/locations?size=500&page=0`)
@@ -51,10 +53,26 @@ export default function Map() {
             latitude={item.coordinates.latitude} 
             longitude={item.coordinates.longitude}
           >
-            <AddLocationTwoToneIcon/>
+            <AddLocationTwoToneIcon 
+              style={{cursor: "pointer"}}
+              onClick={(e) => {
+                setSelected(item);
+              }} 
+            />
           </Marker>
         )
       })}
+      {selected && selected.coordinates && selected.location && (
+        <Popup
+          latitude={selected.coordinates.latitude}
+          longitude={selected.coordinates.longitude}
+          closeButton
+          closeOnClick={false}
+          onClose={() => setSelected(null)}
+        >
+          <CrimeCard location={selected.location} />
+        </Popup>
+      )}
     </ReactMapGL>
     )}
     </>
