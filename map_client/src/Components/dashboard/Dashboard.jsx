@@ -23,6 +23,7 @@ import Chart from "./Chart";
 import Orders from "./Orders";
 import CustomOrder from "./CustomOrder";
 import CustomChart from "./CustomChart";
+import Map from "./Map";
 
 const drawerWidth = 240;
 
@@ -201,6 +202,7 @@ export default function Dashboard({ history }) {
           </Container>
         )}
         {counter === 1 && <CustomOrder />}
+        {counter === 2 && <Map />}
       </main>
     </div>
   );

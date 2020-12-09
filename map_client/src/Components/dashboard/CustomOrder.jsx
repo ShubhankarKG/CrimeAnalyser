@@ -6,6 +6,7 @@ import {
   Paper,
   TextField,
 } from "@material-ui/core";
+import { Autocomplete } from '@material-ui/lab';
 import React, { useState } from "react";
 import CustomChart from "./CustomChart";
 import Orders from "./Orders";
@@ -104,6 +105,18 @@ export default function CustomOrder() {
   const classes = useStyles();
   const [tableData, setTableData] = useState([]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [locations, setLocations] = useState([]);
+
+  React.useEffect(() => {
+    fetch("http://localhost:8080/locations?size=1615")
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        let locs = res['_embedded'].locations.map(item => item.location);
+        console.log(locs);
+        setLocations(locs);
+      });
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -132,17 +145,22 @@ export default function CustomOrder() {
         <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
             <Grid item xs={12}>
-              <TextField
-                name="Location"
+              <Autocomplete
+                options={locations}
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                label="Enter Location of choice"
+                onChange={(e, inp) => setLocation(inp)}
+                renderInput={(params) => 
+                  <TextField 
+                    {...params} 
+                    label="Enter Location of choice"
+                  />}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 name="year"
                 value={year}
+                fullWidth
                 onChange={(e) => setYear(e.target.value)}
                 label="Enter year of choice"
               />
@@ -160,7 +178,7 @@ export default function CustomOrder() {
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <Orders tableData={tableData} />
+            <Orders tableData={tableData} location={location} />
           </Paper>
         </Grid>
         {isSubmitted && (

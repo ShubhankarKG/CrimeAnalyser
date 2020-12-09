@@ -16,7 +16,7 @@ export const mainListItems = ({ history, setCounter }) => (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Map" onClick={() => history.push("/map")} />
+      <ListItemText primary="Map" onClick={() => setCounter(2)} />
     </ListItem>
     <ListItem button onClick={() => setCounter(0)}>
       <ListItemIcon>
