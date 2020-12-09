@@ -214,7 +214,7 @@ export default function Dashboard({ history }) {
               </Grid>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  <Orders tableData={tableData} />
+                  <Orders tableData={tableData} location={"Cities"} />
                 </Paper>
               </Grid>
             </Grid>
