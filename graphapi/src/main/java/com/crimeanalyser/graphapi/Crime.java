@@ -3,37 +3,50 @@ package com.crimeanalyser.graphapi;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 @NodeEntity
 public class Crime {
   @Id @GeneratedValue private Long id;
-  private Integer count;
-  private String type;
+  private Long year;
 
-  private Crime(){}
-  public Crime(String type, Integer count) {
-    this.type = type;
-    this.count = count;
-  }
+  @Property("Dowry")
+  private Long dowry;
 
-  public void setCount(Integer count) {
-    this.count = count;
-  }
+  @Property("Rape")
+  private Long rape;
 
-  public void setType(String type) {
-    this.type = type;
-  }
+  @Property("Riots")
+  private Long riots;
 
-  public Integer getCount() {
-    return count;
-  }
+  @Property("Murder")
+  private Long murder;
 
-  public Long getId() {
-    return id;
-  }
+  @Property("Hurt")
+  private Long hurt;
 
-  public String getType() {
-    return type;
-  }
+  @Property("Burglary")
+  private Long burglary;
+
+  @Property("Theft")
+  private Long theft;
+
+  @Property("KidnappingAndAbduction")
+  private Long kidnappingAndAbduction;
+
+  @Property("Cheating")
+  private Long cheating;
+
+  @Property("AttemptToMurder")
+  private Long attemptToMurder;
+
+  private String location;
 
 }

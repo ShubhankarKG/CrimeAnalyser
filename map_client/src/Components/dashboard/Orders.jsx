@@ -6,7 +6,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 
-export default function Orders({ tableData }) {
+export default function Orders({ tableData, location }) {
   // const [tableData, setTableData] = React.useState([]);
 
   // React.useEffect(() => {
@@ -21,7 +21,7 @@ export default function Orders({ tableData }) {
 
   return (
     <React.Fragment>
-      <Title>Current Crime Reports for City</Title>
+      <Title>Current Crime Reports for {location}</Title>
       {tableData.length > 0 && (
         <Table size="medium">
           <TableHead>
