@@ -184,28 +184,23 @@ export default function Dashboard({ history }) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12} lg={12}>
-              <Paper className={fixedHeightPaper}>
-                {counter === 0 && <Chart />}
-                {counter === 1 && <CustomOrder setTableData={setTableData} />}
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders tableData={tableData} />
-              </Paper>
-            </Grid>
-            {counter === 1 && (
-              <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                  <CustomChart chartData={tableData[0]} />
+        {counter === 0 && (
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper className={fixedHeightPaper}>
+                  <Chart />
                 </Paper>
               </Grid>
-            )}
-          </Grid>
-        </Container>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <Orders tableData={tableData} />
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        )}
+        {counter === 1 && <CustomOrder />}
       </main>
     </div>
   );
