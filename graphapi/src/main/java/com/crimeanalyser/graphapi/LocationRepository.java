@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface LocationRepository extends Neo4jRepository<Location, Long> {
   List<Location> findByLocation(@Param("location") String location);
+  List<Location> findAll();
 }

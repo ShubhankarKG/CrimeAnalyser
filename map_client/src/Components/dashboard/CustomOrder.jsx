@@ -176,17 +176,19 @@ export default function CustomOrder() {
             </Grid>
           </Paper>
         </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Orders tableData={tableData} location={location} />
-          </Paper>
-        </Grid>
         {isSubmitted && (
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <CustomChart location={location} year={year} />
-            </Paper>
-          </Grid>
+          <>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Orders tableData={tableData} location={location} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <CustomChart location={location} year={year} />
+              </Paper>
+            </Grid>
+          </>
         )}
       </Grid>
     </Container>
