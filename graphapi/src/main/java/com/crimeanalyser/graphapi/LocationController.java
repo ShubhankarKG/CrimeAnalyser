@@ -44,7 +44,8 @@ public class LocationController {
 
           map.put(COORD, obj);
           map.put("location", record.get("l").get("location").asObject());
-          map.put(crime, record.get("c").get(crime).asObject());
+          map.put("crime", record.get("c").get(crime).asObject());
+          map.put("type", crime);
           list.add(map);
         });
         return list;
