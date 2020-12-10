@@ -208,7 +208,10 @@ export default function Dashboard({ history }) {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            {counter === 0 && "Dashboard"}
+            {counter === 1 && "Map"}
+            {counter === 2 && "Customers"}
+            {counter === 3 && "Custom Reports"}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
