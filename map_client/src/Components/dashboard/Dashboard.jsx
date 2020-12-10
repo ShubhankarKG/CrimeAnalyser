@@ -25,6 +25,7 @@ import CustomOrder from "./CustomOrder";
 import CustomChart from "./CustomChart";
 import Map from "./Map";
 import { messaging } from "../../init-fcm";
+import Customer from "./Customer";
 
 const drawerWidth = 240;
 
@@ -220,8 +221,9 @@ export default function Dashboard({ history }) {
             </Grid>
           </Container>
         )}
-        {counter === 1 && <CustomOrder />}
-        {counter === 2 && <Map />}
+        {counter === 1 && <Map />}
+        {counter === 2 && <Customer />}
+        {counter === 3 && <CustomOrder />}
       </main>
     </div>
   );

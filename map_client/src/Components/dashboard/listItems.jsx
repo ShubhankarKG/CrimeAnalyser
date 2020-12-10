@@ -24,7 +24,7 @@ export const mainListItems = ({ history, setCounter }) => (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={() => setCounter(2)}>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
