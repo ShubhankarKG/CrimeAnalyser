@@ -58,7 +58,7 @@ export default function Map() {
             longitude={item.coordinates.longitude}
           >
             <AddLocationTwoToneIcon 
-              style={{cursor: "pointer"}}
+              style={{cursor: "pointer", color: "#ce2029"}}
               onClick={(e) => {
                 setSelected(item);
               }} 

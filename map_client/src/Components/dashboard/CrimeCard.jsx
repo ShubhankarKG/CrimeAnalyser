@@ -9,8 +9,11 @@ const CrimeCard = ({location}) => {
   const [crimes, setCrimes] = useState(null);
   const [crimeInYear, setCrimeInYear] = useState(null);
 
+  const getTotal = () => {
+    return crimeInYear.rape + crimeInYear.murder + crimeInYear.hurt + crimeInYear.attemptToMurder;
+  }
   const getStatus = () => {
-    const dangerous =  crimeInYear.rape + crimeInYear.murder + crimeInYear.hurt + crimeInYear.attemptToMurder;
+    const dangerous =  getTotal()
     if(dangerous > 3000) return "Very High";
     else if(dangerous > 1000 && dangerous < 3000) return "High";
     else if(dangerous > 500 && dangerous < 1000) return "Moderate";
@@ -51,6 +54,9 @@ const CrimeCard = ({location}) => {
         <Grid item>
           <Typography>
             This place had {getStatus()} Crime Rates in the year {crimeInYear.year}
+          </Typography>
+          <Typography variant="p">
+            There have been {getTotal()} dangerous crimes (Murder, Atttempt to murder, Rape and Hurt).
           </Typography>
         </Grid>
         )}
