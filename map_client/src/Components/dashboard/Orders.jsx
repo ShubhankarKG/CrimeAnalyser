@@ -21,11 +21,12 @@ export default function Orders({ tableData, location }) {
 
   return (
     <React.Fragment>
-      <Title>Current Crime Reports for {location}</Title>
+      {!!location && <Title>Current Crime Reports for {location}</Title>}
       {tableData.length > 0 && (
         <Table size="medium">
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               {Object.keys(tableData[0]).map((header) => (
                 <TableCell>{header}</TableCell>
               ))}
@@ -34,6 +35,7 @@ export default function Orders({ tableData, location }) {
           <TableBody>
             {tableData.map((row, idx) => (
               <TableRow key={idx}>
+                <TableCell>{idx + 1}</TableCell>
                 {Object.keys(row).map((val) => (
                   <TableCell>{row[val]}</TableCell>
                 ))}

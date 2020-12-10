@@ -14,9 +14,23 @@ import Orders from "./Orders";
 import Title from "./Title";
 import clsx from "clsx";
 
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  root2: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+
   root: {
     display: "flex",
   },
@@ -99,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Customer() {
+export default function Customer({ notification, setNotification, message }) {
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2007);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -107,19 +121,8 @@ export default function Customer() {
   const [tableData, setTableData] = useState([]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [locations, setLocations] = useState([]);
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
-
-  React.useEffect(() => {
-    fetch("http://localhost:8000/locations?size=1615")
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        let locs = res["_embedded"].locations.map((item) => item.location);
-        console.log(locs);
-        setLocations(locs);
-      });
-  }, []);
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
 
   useEffect(() => {
     if ("geolocation" in window.navigator) {
@@ -136,42 +139,50 @@ export default function Customer() {
     }
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (!!latitude && !!longitude) {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ latitude, longitude }),
+      };
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ location, year: parseInt(year) }),
-    };
-
-    fetch("http://localhost:8000/gdb/custom", requestOptions)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setTableData([res]);
-        setIsSubmitted(true);
-      })
-      .catch((err) => console.log(err));
-  };
+      fetch("http://localhost:8000/notif", requestOptions)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setTableData(res.data);
+          setIsSubmitted(true);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [latitude, longitude]);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={12} lg={12} spacing={3}>
+        <Grid item xs={12} md={12} lg={12}>
           <Paper className={fixedHeightPaper}>
             <Grid item xs={12}>
               <Title>Your Current Location</Title>
             </Grid>
             <Grid item xs={12}>
               <InputLabel>Longitude</InputLabel>
-              <TextField value={longitude} disabled onChange={(e) => setLongitude(e.target.value)}/>
+              <TextField
+                value={longitude}
+                disabled
+                onChange={(e) => setLongitude(e.target.value)}
+              />
             </Grid>
             <Grid item xs={12}>
               <InputLabel>Latitude</InputLabel>
-              <TextField value={latitude} disabled onChange={(e) => setLatitude(e.target.value)} />
+              <TextField
+                value={latitude}
+                disabled
+                onChange={(e) => setLatitude(e.target.value)}
+              />
             </Grid>
           </Paper>
         </Grid>
@@ -179,15 +190,23 @@ export default function Customer() {
           <>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders tableData={tableData} location={location} />
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <CustomChart location={location} year={year} />
+                <Title>Vulnerable Locations</Title>
+                <Orders tableData={tableData} />
               </Paper>
             </Grid>
           </>
+        )}
+        {notification && (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={notification}
+            autoHideDuration={6000}
+            onClose={() => setNotification(false)}
+          >
+            <Alert onClose={() => setNotification(false)} severity="error">
+              {message}
+            </Alert>
+          </Snackbar>
         )}
       </Grid>
     </Container>

@@ -120,6 +120,8 @@ export default function Dashboard({ history }) {
     setOpen(!open);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [notification, setNotification] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
   const [tableData, setTableData] = React.useState([]);
 
@@ -129,6 +131,21 @@ export default function Dashboard({ history }) {
       .then(async function () {
         const token = await messaging.getToken();
         console.log("token = ", token);
+
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        };
+
+        fetch("http://localhost:8000/token", requestOptions)
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
       })
       .catch(function (err) {
         console.log("Unable to get permission to notify.", err);
@@ -136,9 +153,22 @@ export default function Dashboard({ history }) {
   }, []);
 
   React.useEffect(() => {
-    window.navigator.serviceWorker.addEventListener("message", (message) =>
-      console.log(message)
-    );
+    let isMounted = true;
+    if (isMounted) {
+      window.navigator.serviceWorker.addEventListener("message", (message) => {
+        console.log(
+          message["data"]["firebase-messaging-msg-data"]["data"]["title"]
+        );
+        setNotification(true);
+        const { body, title } = message["data"]["firebase-messaging-msg-data"][
+          "data"
+        ];
+        setMessage(`${title} ${body}`);
+      });
+    }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   React.useEffect(() => {
@@ -222,7 +252,13 @@ export default function Dashboard({ history }) {
           </Container>
         )}
         {counter === 1 && <Map />}
-        {counter === 2 && <Customer />}
+        {counter === 2 && (
+          <Customer
+            notification={notification}
+            setNotification={setNotification}
+            message={message}
+          />
+        )}
         {counter === 3 && <CustomOrder />}
       </main>
     </div>

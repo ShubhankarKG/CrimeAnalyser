@@ -16,7 +16,7 @@ export const mainListItems = ({ history, setCounter }) => (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Map" onClick={() => setCounter(2)} />
+      <ListItemText primary="Map" onClick={() => setCounter(1)} />
     </ListItem>
     <ListItem button onClick={() => setCounter(0)}>
       <ListItemIcon>
@@ -34,7 +34,7 @@ export const mainListItems = ({ history, setCounter }) => (
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Custom Reports" onClick={() => setCounter(1)} />
+      <ListItemText primary="Custom Reports" onClick={() => setCounter(3)} />
     </ListItem>
   </div>
 );
