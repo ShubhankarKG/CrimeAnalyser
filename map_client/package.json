@@ -13,6 +13,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-map-gl": "^5.2.9",
+    "react-map-gl-heatmap-overlay": "^1.1.4",
     "react-scripts": "4.0.0",
     "recharts": "^1.8.5",
     "web-vitals": "^0.2.4"
