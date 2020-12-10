@@ -9,6 +9,15 @@ const CrimeCard = ({location}) => {
   const [crimes, setCrimes] = useState(null);
   const [crimeInYear, setCrimeInYear] = useState(null);
 
+  const getStatus = () => {
+    const dangerous =  crimeInYear.rape + crimeInYear.murder + crimeInYear.hurt + crimeInYear.attemptToMurder;
+    if(dangerous > 3000) return "Very High";
+    else if(dangerous > 1000 && dangerous < 3000) return "High";
+    else if(dangerous > 500 && dangerous < 1000) return "Moderate";
+    else if(dangerous > 50 && dangerous < 500) return "Normal";
+    else return "Low";
+  }
+
   useEffect(() => {
     fetch(springHost + `/crimes/search/findByLocation?location=${location}`)
     .then(res => res.json())
@@ -16,7 +25,7 @@ const CrimeCard = ({location}) => {
   }, []);
 
   return (
-      <Grid container direction="column" spacing={2} style={{minWidth: 600, minHeight: 300}}>
+      <Grid container direction="column" spacing={2} style={{minWidth: 600, minHeight: 400}}>
         <Grid item>
           <Typography>
             {location}
@@ -38,6 +47,13 @@ const CrimeCard = ({location}) => {
             )}
           />
         </Grid>
+        {crimeInYear && (
+        <Grid item>
+          <Typography>
+            This place had {getStatus()} Crime Rates in the year {crimeInYear.year}
+          </Typography>
+        </Grid>
+        )}
         <Grid item>
           {crimeInYear && (
             <CustomChart location={crimeInYear.location} year={crimeInYear.year} />

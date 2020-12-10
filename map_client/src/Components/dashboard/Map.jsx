@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import AddLocationTwoToneIcon from '@material-ui/icons/AddLocationTwoTone';
 import CrimeCard from "./CrimeCard";
+import { Backdrop, CircularProgress } from '@material-ui/core';
 
 const springHost = "http://localhost:8080";
 
@@ -36,7 +37,10 @@ export default function Map() {
 
   return (
     <>
-    {loading1 && loading2 && <h2>Loading...</h2>}
+    {loading1 && loading2 && 
+      <Backdrop open={loading1 || loading2}>
+        <CircularProgress color="secondary" />
+      </Backdrop>}
     {!loading1 && !loading2 && (
       <ReactMapGL 
         {...viewport}
