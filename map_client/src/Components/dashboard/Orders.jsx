@@ -7,22 +7,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 
 export default function Orders({ tableData, location }) {
-  // const [tableData, setTableData] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   fetch("http://localhost:8000/gdb/location")
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       setTableData(res.result);
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   return (
     <React.Fragment>
       {!!location && <Title>Current Crime Reports for {location}</Title>}
-      {tableData.length > 0 && (
+      {tableData && tableData.length > 0 && (
         <Table size="medium">
           <TableHead>
             <TableRow>
@@ -39,19 +27,6 @@ export default function Orders({ tableData, location }) {
                 {Object.keys(row).map((val) => (
                   <TableCell>{row[val]}</TableCell>
                 ))}
-                {/* <TableCell>{row.location}</TableCell>
-                <TableCell>{row.AttemptToMurder}</TableCell>
-                <TableCell>{row.Burglary}</TableCell>
-                <TableCell>{row.Cheating}</TableCell>
-                <TableCell>{row.Dowry}</TableCell>
-                <TableCell>{row.Hurt}</TableCell>
-                <TableCell>{row.KidnappingAndAbduction}</TableCell>
-                <TableCell>{row.Murder}</TableCell>
-                <TableCell>{row.Rape}</TableCell>
-                <TableCell>{row.Riots}</TableCell>
-                <TableCell>{row.Theft}</TableCell>
-                <TableCell>{row.total}</TableCell>
-                <TableCell>{row.year}</TableCell> */}
               </TableRow>
             ))}
           </TableBody>

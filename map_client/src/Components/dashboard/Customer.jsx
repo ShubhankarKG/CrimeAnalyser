@@ -1,21 +1,18 @@
 import {
-  Button,
   Container,
   Grid,
   InputLabel,
   makeStyles,
   Paper,
-  TextField,
+  TextField
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import React, { useEffect, useState } from "react";
-import CustomChart from "./CustomChart";
-import Orders from "./Orders";
-import Title from "./Title";
-import clsx from "clsx";
-
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import Orders from "./Orders";
+import Title from "./Title";
+
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -114,13 +111,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Customer({ notification, setNotification, message }) {
-  const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2007);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const classes = useStyles();
   const [tableData, setTableData] = useState([]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [locations, setLocations] = useState([]);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
