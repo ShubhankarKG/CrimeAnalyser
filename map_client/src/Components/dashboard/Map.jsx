@@ -29,8 +29,6 @@ export default function Map() {
   const [showOverlay, setShowOverlay] = useState(true);
   
 
-  const mapRef = useRef(null);
-
   React.useEffect(() => {
     const p1 = fetch(springHost + `/locations?size=250&page=0`)
       .then(res => res.json())
