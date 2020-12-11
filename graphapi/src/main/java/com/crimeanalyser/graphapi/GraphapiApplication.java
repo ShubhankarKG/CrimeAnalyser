@@ -16,7 +16,7 @@ public class GraphapiApplication {
 
 	@Bean
 	public Driver getDriver() {
-		return GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "crimeanalyser"));
+		return GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "carmelconvent"));
 	}
 
 }
