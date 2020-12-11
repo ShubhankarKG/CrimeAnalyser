@@ -220,7 +220,7 @@ export default function Dashboard({ history }) {
             {counter === 5 && "Mission Control"}
           </Typography>
           <Button color="inherit" onClick={() => setCounter(4)}>
-            LOGIN
+            {isLoggedIn ? "LOGOUT" : "LOGIN"}
           </Button>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

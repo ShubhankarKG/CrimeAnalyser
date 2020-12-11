@@ -5,8 +5,15 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
+import { Link } from "@material-ui/core";
 
-export default function Orders({ tableData, location }) {
+export default function Orders({
+  tableData,
+  location,
+  isMissionControl,
+  setName,
+  setCounter,
+}) {
   return (
     <React.Fragment>
       {!!location && <Title>Current Crime Reports for {location}</Title>}
@@ -25,7 +32,20 @@ export default function Orders({ tableData, location }) {
               <TableRow key={idx}>
                 <TableCell>{idx + 1}</TableCell>
                 {Object.keys(row).map((val) => (
-                  <TableCell>{row[val]}</TableCell>
+                  <TableCell>
+                    {isMissionControl && val === "name" ? (
+                      <Link
+                        onClick={() => {
+                          setName(row[val]);
+                          setCounter(1);
+                        }}
+                      >
+                        {row[val]}
+                      </Link>
+                    ) : (
+                      row[val]
+                    )}
+                  </TableCell>
                 ))}
               </TableRow>
             ))}
