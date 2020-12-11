@@ -7,7 +7,7 @@ const { exec } = require("child_process");
 const isWin = process.platform === 'win32';
 const runGradle = isWin 
                 ? "cd ../graphapi && .\\gradlew bootRun"
-                : "cd ../graphapi && ./gradlw bootRun"; 
+                : "cd ../graphapi && ./gradlew bootRun"; 
 
 const crimeAnalyserMobile = path.join(__dirname, "../../", "crime_analyser_mobile");
 const startConcurrently = () => {
