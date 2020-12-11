@@ -1,33 +1,22 @@
+import React from "react";
 import {
+  Button,
   Container,
   Grid,
-  InputLabel,
   makeStyles,
+  Modal,
   Paper,
-  TextField
+  TextField,
 } from "@material-ui/core";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import { Autocomplete } from "@material-ui/lab";
+import { useState } from "react";
 import Orders from "./Orders";
 import Title from "./Title";
-
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import clsx from "clsx";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root2: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
-
   root: {
     display: "flex",
   },
@@ -110,82 +99,89 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Customer({ notification, setNotification, message, latitude, longitude }) {
-  const [location, setLocation] = useState("");
-  const [year, setYear] = useState(2007);
+export default function MissionControl() {
+  const [crime, setCrime] = useState("");
+  const [name, setName] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const classes = useStyles();
   const [tableData, setTableData] = useState([]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [locations, setLocations] = useState([]);
+  const [knowData, setKnowData] = useState([]);
+  const [counter, setCounter] = useState(0);
 
+  React.useEffect(() => {
+    fetch("http://localhost:8080/queries/people/getCriminals")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (isSubmitted) {
+          if (crime === "All") {
+            setTableData(res.criminals);
+          } else {
+            setTableData(res.criminals.filter((a) => a.crime === crime));
+          }
+        } else {
+          setTableData(res.criminals);
+          setIsSubmitted(true);
+        }
+      });
+  }, [crime, isSubmitted]);
 
-  useEffect(() => {
-    if (!!latitude && !!longitude) {
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ latitude, longitude }),
-      };
-
-      fetch("http://localhost:8000/notif", requestOptions)
+  React.useEffect(() => {
+    if (!!name) {
+      fetch(
+        `http://localhost:8080/queries/people/getPeopleWhoKnowCriminal?name=${name}`
+      )
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          setTableData(res.data);
-          setIsSubmitted(true);
-        })
-        .catch((err) => console.log(err));
+          setKnowData(res.people);
+        });
     }
-  }, [latitude, longitude]);
+  }, [name]);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={12} lg={12}>
-          <Paper className={fixedHeightPaper}>
-            <Grid item xs={12}>
-              <Title>Your Current Location</Title>
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel>Longitude</InputLabel>
-              <TextField
-                value={longitude}
-                disabled
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel>Latitude</InputLabel>
-              <TextField
-                value={latitude}
-                disabled
-              />
-            </Grid>
-          </Paper>
-        </Grid>
-        {isSubmitted && (
+        {counter === 0 && (
           <>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Title>Vulnerable Locations</Title>
-                <Orders tableData={tableData} />
+            <Grid item xs={12} md={12} lg={12}>
+              <Paper className={fixedHeightPaper}>
+                <Grid item xs={12}>
+                  <Autocomplete
+                    options={["Theft", "Burglary", "Murder", "All"]}
+                    value={crime}
+                    onChange={(e, inp) => setCrime(inp)}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Enter Crime Type" />
+                    )}
+                  />
+                </Grid>
               </Paper>
             </Grid>
+            {isSubmitted && (
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <Title>Criminal List</Title>
+                  <Orders
+                    tableData={tableData}
+                    isMissionControl={true}
+                    setName={setName}
+                    setCounter={setCounter}
+                  />
+                </Paper>
+              </Grid>
+            )}
           </>
         )}
-        {notification && (
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={notification}
-            autoHideDuration={6000}
-            onClose={() => setNotification(false)}
-          >
-            <Alert onClose={() => setNotification(false)} severity="error">
-              {message}
-            </Alert>
-          </Snackbar>
+        {counter === 1 && (
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Title>{`People Whom ${name} know`}</Title>
+              <Orders tableData={knowData} />
+              <Button onClick={() => setCounter(0)} color="primary">Go Back</Button>
+            </Paper>
+          </Grid>
         )}
       </Grid>
     </Container>

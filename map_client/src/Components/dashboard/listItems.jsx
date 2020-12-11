@@ -9,8 +9,9 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import { AccountBox } from "@material-ui/icons";
 
-export const mainListItems = ({ history, setCounter }) => (
+export const mainListItems = ({ setCounter, isLoggedIn }) => (
   <div>
     <ListItem button onClick={() => setCounter(0)}>
       <ListItemIcon>
@@ -22,7 +23,7 @@ export const mainListItems = ({ history, setCounter }) => (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Map"/>
+      <ListItemText primary="Map" />
     </ListItem>
     <ListItem button onClick={() => setCounter(2)}>
       <ListItemIcon>
@@ -36,5 +37,16 @@ export const mainListItems = ({ history, setCounter }) => (
       </ListItemIcon>
       <ListItemText primary="Custom Reports" />
     </ListItem>
+    {
+      // Counter === 4 is for login
+    }
+    {isLoggedIn && (
+      <ListItem button onClick={() => setCounter(5)}>
+        <ListItemIcon>
+          <AccountBox />
+        </ListItemIcon>
+        <ListItemText primary="Mission Control" />
+      </ListItem>
+    )}
   </div>
 );

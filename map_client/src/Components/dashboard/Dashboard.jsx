@@ -26,6 +26,9 @@ import CustomChart from "./CustomChart";
 import Map from "./Map";
 import { messaging } from "../../init-fcm";
 import Customer from "./Customer";
+import { Button } from "@material-ui/core";
+import Login from "./Login";
+import MissionControl from "./MissionControl";
 
 const drawerWidth = 240;
 
@@ -122,9 +125,9 @@ export default function Dashboard({ history }) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [notification, setNotification] = React.useState(false);
   const [message, setMessage] = React.useState("");
-
   const [tableData, setTableData] = React.useState([]);
 
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [latitude, setLatitude] = React.useState("");
   const [longitude, setLongitude] = React.useState("");
 
@@ -230,7 +233,12 @@ export default function Dashboard({ history }) {
             {counter === 1 && "Map"}
             {counter === 2 && "Customers"}
             {counter === 3 && "Custom Reports"}
+            {counter === 4 && "Login Page"}
+            {counter === 5 && "Mission Control"}
           </Typography>
+          <Button color="inherit" onClick={() => setCounter(4)}>
+            {isLoggedIn ? "LOGOUT" : "LOGIN"}
+          </Button>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
@@ -251,7 +259,7 @@ export default function Dashboard({ history }) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems({ history, setCounter })}</List>
+        <List>{mainListItems({ isLoggedIn, setCounter })}</List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
@@ -283,6 +291,10 @@ export default function Dashboard({ history }) {
           />
         )}
         {counter === 3 && <CustomOrder />}
+        {counter === 4 && (
+          <Login setCounter={setCounter} setisLoggedIn={setIsLoggedIn} />
+        )}
+        {counter === 5 && <MissionControl />}
       </main>
     </div>
   );
