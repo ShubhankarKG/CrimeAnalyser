@@ -25,7 +25,8 @@ const CrimeCard = ({location}) => {
     fetch(springHost + `/crimes/search/findByLocation?location=${location}`)
     .then(res => res.json())
     .then(res => {setCrimes([...res["_embedded"].crimes]); console.log(res["_embedded"].crimes)});
-  }, []);
+    setCrimeInYear(null);
+  }, [location]);
 
   return (
       <Grid container direction="column" spacing={2} style={{minWidth: 600, minHeight: 400}}>

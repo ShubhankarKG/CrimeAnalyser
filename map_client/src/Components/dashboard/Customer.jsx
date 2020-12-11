@@ -113,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Customer({ notification, setNotification, message }) {
+export default function Customer({ notification, setNotification, message, latitude, longitude }) {
   const [location, setLocation] = useState("");
   const [year, setYear] = useState(2007);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -121,23 +121,7 @@ export default function Customer({ notification, setNotification, message }) {
   const [tableData, setTableData] = useState([]);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [locations, setLocations] = useState([]);
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
 
-  useEffect(() => {
-    if ("geolocation" in window.navigator) {
-      navigator.geolocation.watchPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-        },
-        (err) => {
-          setLatitude("Please allow locations!");
-          setLongitude("Please allow locations!");
-        }
-      );
-    }
-  }, []);
 
   useEffect(() => {
     if (!!latitude && !!longitude) {
@@ -173,7 +157,6 @@ export default function Customer({ notification, setNotification, message }) {
               <TextField
                 value={longitude}
                 disabled
-                onChange={(e) => setLongitude(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -181,7 +164,6 @@ export default function Customer({ notification, setNotification, message }) {
               <TextField
                 value={latitude}
                 disabled
-                onChange={(e) => setLatitude(e.target.value)}
               />
             </Grid>
           </Paper>

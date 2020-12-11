@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactMapGL, { GeolocateControl, HTMLOverlay, Layer, Marker, NavigationControl, Popup, Source } from "react-map-gl";
-import { LocationOn, ToggleOff, ToggleOn } from '@material-ui/icons/';
+import { LocationOn, ToggleOff, ToggleOn, Adjust } from '@material-ui/icons/';
 import CrimeCard from "./CrimeCard";
 import { Backdrop, Button, Checkbox, CircularProgress, Divider, FormControlLabel, FormGroup, Grid, IconButton, Paper, TextField } from '@material-ui/core';
 import heatmapLayer from './heatmap-style';
@@ -10,7 +10,7 @@ const springHost = "http://localhost:8080";
 const CRIMES = ["Murder", "Rape", "Theft", "AttemptToMurder"];
 const YEARS = ["2007", "2008", "2009", "2010"];
 
-export default function Map() {
+export default function Map({longitude, latitude}) {
   const [viewport, setViewport] = useState({
     latitude: 19.07599,
     longitude: 72.877393,
@@ -63,6 +63,11 @@ export default function Map() {
         }}
         //mapStyle="mapbox://styles/shubhankarkg/ckh4wo0z108pz19mpn2ay57dj"
       >
+        {typeof(latitude) === 'number' && typeof(longitude) === 'number' && (
+          <Marker latitude={latitude} longitude={longitude}>
+            <Adjust color='primary' fontSize='medium' />
+          </Marker>
+        )}
         <HTMLOverlay redraw={({
           width,
           height,
@@ -186,7 +191,8 @@ export default function Map() {
                 style={{cursor: "pointer", color: "#ce2029"}}
                 onClick={(e) => {
                   setSelected(item);
-                }} 
+                }}
+                fontSize="small"
               />
             </Marker>
           )
