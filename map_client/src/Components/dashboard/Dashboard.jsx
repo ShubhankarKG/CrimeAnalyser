@@ -128,6 +128,23 @@ export default function Dashboard({ history }) {
   const [tableData, setTableData] = React.useState([]);
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [latitude, setLatitude] = React.useState("");
+  const [longitude, setLongitude] = React.useState("");
+
+  React.useEffect(() => {
+    if ("geolocation" in window.navigator) {
+      navigator.geolocation.watchPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (err) => {
+          setLatitude("Please allow locations!");
+          setLongitude("Please allow locations!");
+        }
+      );
+    }
+  }, []);
 
   React.useEffect(() => {
     messaging
@@ -263,12 +280,14 @@ export default function Dashboard({ history }) {
             </Grid>
           </Container>
         )}
-        {counter === 1 && <Map />}
+        {counter === 1 && <Map latitude={latitude} longitude={longitude} />}
         {counter === 2 && (
           <Customer
             notification={notification}
             setNotification={setNotification}
             message={message}
+            latitude={latitude}
+            longitude={longitude}
           />
         )}
         {counter === 3 && <CustomOrder />}
